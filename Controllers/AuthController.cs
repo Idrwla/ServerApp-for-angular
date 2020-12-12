@@ -4,35 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ServerApp1.Models;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ServerApp1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class cityController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly travelAndBookingContext _db;
-        public cityController(travelAndBookingContext context)
+        public AuthController(travelAndBookingContext context)
         {
             _db = context;
         }
-
-
-        // GET: api/<cityController>
-        [HttpGet]
-        public IActionResult Get() => Ok(_db.Citys.ToList());
-
-        // GET api/<cityController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        // GET: api/<AuthController>
+        [HttpPost]
+        public IActionResult PostSingIn( string email, string pass)
         {
-            var from_db = _db.Citys.FirstOrDefault(db => db.Id == id);
+            if (email == null || pass == null)
+            {
+                return BadRequest("probles is here");
+            }
+
+            var from_db = _db.Users.FirstOrDefault(db => db.Email == email && db.Password == pass);
             if (from_db == null)
             {
-                return BadRequest();
+                return BadRequest(" User not found");
             }
+
             return Ok(from_db);
         }
     }

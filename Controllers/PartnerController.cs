@@ -19,10 +19,12 @@ namespace ServerApp1.Controllers
             _db = context;
         }
 
+
         // GET api/<PartnerController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{ids}")]
+        public IActionResult Get(string ids)
         {
+            int  id = Int32.Parse(ids);
             var from_db = _db.Partners.FirstOrDefault(db => db.UserId == id);
             if (from_db == null)
             {
@@ -40,9 +42,12 @@ namespace ServerApp1.Controllers
                 return BadRequest();
             }
             value.Id = _db.Partners.ToList().Count;
+            var bank = new Bank();
+            bank.Id = _db.Banks.ToList().Count + 1;
+            value.BankId = bank.Id;
             _db.Partners.Add(value);
             _db.SaveChanges();
-            return Ok();
+            return Ok(value);
         }
 
         // PUT api/<PartnerController>/5

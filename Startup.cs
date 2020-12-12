@@ -34,6 +34,7 @@ namespace ServerApp1
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ServerApp1", Version = "v1" });
             });
             services.AddTransient<travelAndBookingContext, travelAndBookingContext>();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +50,7 @@ namespace ServerApp1
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(builder => builder.AllowAnyOrigin());
 
             app.UseAuthorization();
 

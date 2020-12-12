@@ -48,7 +48,7 @@ namespace ServerApp1.Controllers
         {
             if (value == null)
             {
-                return BadRequest();
+                return BadRequest("problem is here");
             }
             value.Id = _db.Tickets.ToList().Count;
             _db.Tickets.Add(value);

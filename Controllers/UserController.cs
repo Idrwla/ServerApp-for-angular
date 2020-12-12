@@ -19,13 +19,6 @@ namespace ServerApp1.Controllers
             _db = context;
         }
 
-        // GET: api/<UserController>
-        /*[HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }*/
-
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -42,14 +35,16 @@ namespace ServerApp1.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] User value)
         {
-            if(value == null)
+            if (value == null)
             {
                 return BadRequest();
             }
+            value.Id = _db.Users.ToList().Count;
             _db.Users.Add(value);
             _db.SaveChanges();
-            return Ok();
+            return Ok(_db.Users.FirstOrDefault(db => db.Id == value.Id));
         }
+       
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]

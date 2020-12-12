@@ -15,6 +15,6 @@ namespace ServerApp1.Models
         public int TypeId { get; set; }
         public int CityFrom { get; set; }
         public int CityTo { get; set; }
-        public decimal Cost { get; set; }
+        public int Cost { get; set; }
     }
 }
